@@ -1,10 +1,5 @@
 FROM gradle:7-jdk11 AS build
 
-ENV DB_HOST ${DB_HOST}
-ENV DB_PORT ${DB_PORT}
-ENV DB_NAME ${DB_NAME}
-ENV DB_USER ${DB_USER}
-ENV DB_PASSWORD ${DB_PASSWORD}
 ENV TOKEN ${TOKEN}
 
 COPY --chown=gradle:gradle . /home/gradle/src
