@@ -1,0 +1,131 @@
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.dashboard {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+.controls label {
+    font-weight: bold;
+}
+
+.controls select {
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* Chart container */
+#chart-container {
+    margin-bottom: 20px;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+/* State information */
+#state-info {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.state-on {
+    color: green;
+    font-weight: bold;
+}
+
+.state-off {
+    color: red;
+    font-weight: bold;
+}
+
+/* Valve form */
+.valve-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.valve-form input {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.valve-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+}
+
+.valve-form button:hover {
+    background-color: #218838;
+}
+
+.valve-response {
+    margin-top: 10px;
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+    .dashboard {
+        padding: 10px;
+    }
+
+    .controls select {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    #state-info {
+        font-size: 16px;
+    }
+
+    .valve-form input {
+        font-size: 14px;
+    }
+
+    .valve-form button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .controls label,
+    .controls select,
+    #state-info,
+    .valve-form input,
+    .valve-form button {
+        font-size: 14px;
+    }
+}

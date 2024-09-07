@@ -8,4 +8,6 @@ data class SensorsData(
     val tank2: Int,
     val uvLight: Boolean,
     val pump: Boolean,
+    val electrovalve1: Boolean,
+    val electrovalve2: Boolean
 )

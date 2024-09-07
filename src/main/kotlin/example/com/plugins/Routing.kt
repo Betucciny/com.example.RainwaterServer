@@ -1,17 +1,29 @@
 package example.com.plugins
 
+import example.com.functions.getWaterData
 import example.com.model.request.SensorsData
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
+import io.ktor.server.freemarker.*
+import io.ktor.server.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
+
+
 fun Application.configureRouting() {
     routing {
+        staticResources("/static", "static")
         get("/") {
-            call.respondText("Hello World!")
+            call.respond(FreeMarkerContent("index.ftl", null))
+        }
+        get("/update-chart") {
+            val range = call.request.queryParameters["range"] ?: "last-hour"
+            val data = getWaterData(range)
+            println(data)
+            call.respond(data)
         }
         authenticate("auth") {
             post("/data") {
@@ -22,6 +34,9 @@ fun Application.configureRouting() {
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.BadRequest, "Error: ${e.message}")
                 }
+            }
+            post("/open-valve") {
+                call.respond(HttpStatusCode.OK)
             }
         }
     }
