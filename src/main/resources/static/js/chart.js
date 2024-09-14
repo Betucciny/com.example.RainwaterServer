@@ -15,14 +15,23 @@ $(document).ready(function() {
         waterLevelChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: data.labels,
-                datasets: [{
-                    label: 'Water Level (Liters)',
-                    data: data.values,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 2,
-                    fill: false
-                }]
+                labels: data.time,
+                datasets: [
+                    {
+                        label: 'Tanque 1 (Litros)',
+                        data: data.tank1,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    },
+                    {
+                        label: 'Tanque 2 (Litros)',
+                        data: data.tank2,
+                        borderColor: 'rgba(192, 75, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }
+                ]
             },
             options: {
                 scales: {
@@ -59,6 +68,14 @@ $(document).ready(function() {
                 // Update UV light state with appropriate class
                 const uvLightClass = data.uvLightState ? 'state-on' : 'state-off';
                 $('#uv-light-state').text(`UV Light State: ${data.uvLightState ? 'ON' : 'OFF'}`).removeClass('state-on state-off').addClass(uvLightClass);
+
+                // Update Valve 1 state
+                const valve1Class = data.valve1State ? 'state-on' : 'state-off';
+                $('#valve1-state').text(`Valve 1 State: ${data.valve1State ? 'OPEN' : 'CLOSED'}`).removeClass('state-on state-off').addClass(valve1Class);
+
+                // Update Valve 2 state
+                const valve2Class = data.valve2State ? 'state-on' : 'state-off';
+                $('#valve2-state').text(`Valve 2 State: ${data.valve2State ? 'OPEN' : 'CLOSED'}`).removeClass('state-on state-off').addClass(valve2Class);
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching dashboard data:', error);
@@ -75,25 +92,62 @@ $(document).ready(function() {
     // Update dashboard data when time range changes
     $('#time-range').change(updateDashboardData);
 
-    // Handle valve form submission
-    $('#valve-form').submit(function(event) {
+    // Handle valve 1 form submission
+    $('#valve1-form').submit(function(event) {
         event.preventDefault(); // Prevent form from submitting normally
 
         // Get the auth token from the input field
         const authToken = $('input[name="auth-token"]').val();
 
         $.ajax({
-            url: '/open-valve',
+            url: '/open-valve1',
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${authToken}` // Set the Authorization header
             },
             data: $(this).serialize(),
             success: function(response) {
-                $('#valve-response').text(response);
+                $('#valve1-response').text(response);
             },
             error: function(xhr, status, error) {
-                console.error('Error opening valve:', error);
+                console.error('Error opening Valve 1:', error);
+            }
+        });
+    });
+
+    // Handle valve 2 form submission
+    $('#valve2-form').submit(function(event) {
+        event.preventDefault(); // Prevent form from submitting normally
+
+        // Get the auth token from the input field
+        const authToken = $('input[name="auth-token"]').val();
+
+        $.ajax({
+            url: '/open-valve2',
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}` // Set the Authorization header
+            },
+            data: $(this).serialize(),
+            success: function(response) {
+                $('#valve2-response').text(response);
+            },
+            error: function(xhr, status, error) {
+                $('#valve2-response').text('Unauthorized');
+            }
+        });
+    });
+
+    // Handle pump toggle button click
+    $('#toggle-pump').click(function() {
+        $.ajax({
+            url: '/toggle-pump',
+            method: 'POST',
+            success: function(response) {
+                updateDashboardData(); // Refresh the dashboard to reflect pump state
+            },
+            error: function(xhr, status, error) {
+                console.error('Error toggling pump:', error);
             }
         });
     });

@@ -24,8 +24,6 @@
         <select id="time-range" name="range">
             <option value="last-hour">Last Hour</option>
             <option value="last-day">Last Day</option>
-            <option value="last-week">Last Week</option>
-            <option value="last-month">Last Month</option>
         </select>
     </div>
 
@@ -38,12 +36,27 @@
     <div id="state-info">
         <p id="pump-state">Pump State: Loading...</p>
         <p id="uv-light-state">UV Light State: Loading...</p>
+        <p id="valve1-state">Valve 1 State: Loading...</p>
+        <p id="valve2-state">Valve 2 State: Loading...</p>
     </div>
 
-    <form id="valve-form" class="valve-form">
-        <input type="password" name="auth-token" placeholder="Enter Auth Token" required>
-        <button type="submit">Open Valve</button>
-        <div id="valve-response" class="valve-response"></div>
+    <!-- Button to start/stop the pump -->
+    <div class="controls">
+        <button id="toggle-pump">Start Pump</button>
+    </div>
+
+    <!-- Form for opening Valve 1 -->
+    <form id="valve1-form" class="valve-form">
+        <input type="password" name="auth-token" placeholder="Enter Auth Token for Valve 1" required>
+        <button type="submit">Open Valve 1</button>
+        <div id="valve1-response" class="valve-response"></div>
+    </form>
+
+    <!-- Form for opening Valve 2 -->
+    <form id="valve2-form" class="valve-form">
+        <input type="password" name="auth-token" placeholder="Enter Auth Token for Valve 2" required>
+        <button type="submit">Open Valve 2</button>
+        <div id="valve2-response" class="valve-response"></div>
     </form>
 
 </div>

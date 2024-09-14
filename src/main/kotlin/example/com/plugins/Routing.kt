@@ -25,6 +25,9 @@ fun Application.configureRouting() {
             println(data)
             call.respond(data)
         }
+        post("/toggle-pump") {
+            call.respond(HttpStatusCode.OK, "Pump toggled")
+        }
         authenticate("auth") {
             post("/data") {
                 try {
@@ -35,8 +38,11 @@ fun Application.configureRouting() {
                     call.respond(HttpStatusCode.BadRequest, "Error: ${e.message}")
                 }
             }
-            post("/open-valve") {
-                call.respond(HttpStatusCode.OK)
+            post("/open-valve1") {
+                call.respond(HttpStatusCode.OK, "Opened valve 1")
+            }
+            post("/open-valve2") {
+                call.respond(HttpStatusCode.OK, "Opened valve 2")
             }
         }
     }
